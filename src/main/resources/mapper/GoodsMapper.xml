@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dangyongfu.mapper.GoodsMapper">
+	<select id="selectAll" parameterType="com.dangyongfu.beans.Goods" resultType="com.dangyongfu.beans.Goods">
+		SELECT g.*,b.bname,k.kname FROM goods g,brand b,goodskind k 
+		WHERE g.`bid`=b.`bid` AND g.`kid`=k.`kid`
+	</select>
+	<select id="queryBrand" parameterType="com.dangyongfu.beans.Brand" resultType="com.dangyongfu.beans.Brand">
+		select * from brand
+	</select>
+	<select id="queryGoodsKind" parameterType="com.dangyongfu.beans.GoodsKind" resultType="com.dangyongfu.beans.GoodsKind">
+		select * from goodskind
+	</select>
+	<insert id="addGoods" parameterType="com.dangyongfu.beans.Goods">
+		insert into
+		goods
+		(cname,ename,bid,kid,size,price,num,label,prcurl)
+		values
+		(#{cname},#{ename},#{bid},#{kid},#{size},#{price},#{num},#{label},#{prcurl})
+	</insert>
+	<select id="queryGoodsBygid" parameterType="int" resultType="com.dangyongfu.beans.Goods">
+		select * from goods where gid=#{0}
+	</select>
+	<update id="updateGoods" parameterType="com.dangyongfu.beans.Goods">
+		update goods set
+		cname=#{cname},ename=#{ename},bid=#{bid},kid=#{kid},
+		size=#{size},price=#{price},num=#{num},label=#{label},prcurl=#{prcurl}
+		where gid=#{gid}
+	</update>
+	<delete id="deleteGoods" parameterType="string">
+		delete from goods where gid in (${_parameter})
+	</delete>
+</mapper>
